@@ -5,21 +5,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Academico.Controllers
 {
-    public class InstituicaoController : Controller
+    public class DepartamentoController : Controller
     {
-        private readonly AcademicoContext _context;
+        public readonly AcademicoContext _context;
 
-        public InstituicaoController(AcademicoContext context)
+        public DepartamentoController(AcademicoContext context)
         {
             _context = context;
         }
-        public bool InstituicaoExists(long? id)
+
+        public bool DepartamentoExists(long? id)
         {
-            return _context.Instituicoes.Any(i => i.Id == id);
+            return _context.Departamentos.Any(i => i.DepartamentoId == id);
         }
+
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Instituicoes.OrderBy(i => i.Nome).ToListAsync());
+            return View(await _context.Departamentos.OrderBy(i => i.Nome).ToListAsync());
         }
 
         public ActionResult Create()
@@ -30,22 +32,22 @@ namespace Academico.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public async Task<ActionResult> Create([Bind("Nome", "Endereco")]Instituicao instituicao)
+        public async Task<ActionResult> Create([Bind("Nome")] Departamento departamento)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _context.Add(instituicao);
+                    _context.Add(departamento);
                     await _context.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
             }
             catch (DbUpdateException)
             {
-                ModelState.AddModelError("", "Não foi possível cadastrar a instituição");
+                ModelState.AddModelError("", "Não foi possível cadastrar o departamento");
             }
-            return View(instituicao);
+            return View(departamento);
         }
 
         public async Task<IActionResult> Edit(long? id)
@@ -54,20 +56,20 @@ namespace Academico.Controllers
             {
                 return NotFound();
             }
-            var instituicao = await _context.Instituicoes.SingleOrDefaultAsync(i => i.Id == id);
-            if (instituicao == null)
+            var departamento = await _context.Departamentos.SingleOrDefaultAsync(i => i.DepartamentoId == id);
+            if (departamento == null)
             {
                 return NotFound();
             }
-            return View(instituicao);
+            return View(departamento);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public async Task<IActionResult> Edit(long? id, [Bind("Id", "Nome", "Endereco")] Instituicao instituicao)
+        public async Task<IActionResult> Edit(long? id, [Bind("Nome")] Departamento departamento)
         {
-            if (id != instituicao.Id)
+            if (id != departamento.DepartamentoId)
             {
                 return NotFound();
             }
@@ -75,12 +77,12 @@ namespace Academico.Controllers
             {
                 try
                 {
-                    _context.Update(instituicao);
+                    _context.Update(departamento);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!InstituicaoExists(instituicao.Id))
+                    if (!DepartamentoExists(departamento.DepartamentoId))
                     {
                         return NotFound();
                     }
@@ -91,7 +93,7 @@ namespace Academico.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            return View(instituicao);
+            return View(departamento);
         }
 
         public async Task<IActionResult> Details(long? id)
@@ -100,12 +102,12 @@ namespace Academico.Controllers
             {
                 return NotFound();
             }
-            var instituicao = await _context.Instituicoes.SingleOrDefaultAsync(i => i.Id == id);
-            if (instituicao == null)
+            var departamento = await _context.Departamentos.SingleOrDefaultAsync(i => i.DepartamentoId == id);
+            if (departamento == null)
             {
                 return NotFound();
             }
-            return View(instituicao);
+            return View(departamento);
         }
 
 
@@ -115,20 +117,20 @@ namespace Academico.Controllers
             {
                 return NotFound();
             }
-            var instituicao = await _context.Instituicoes.SingleOrDefaultAsync(i => i.Id == id);
-            if (instituicao == null)
+            var departamento = await _context.Departamentos.SingleOrDefaultAsync(i => i.DepartamentoId == id);
+            if (departamento == null)
             {
                 return NotFound();
             }
-            return View(instituicao);
+            return View(departamento);
         }
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
 
         public async Task<ActionResult> DeleteConfirmed(long? id)
         {
-            var instituicao = await _context.Instituicoes.SingleOrDefaultAsync(i => i.Id == id);
-            _context.Instituicoes.Remove(instituicao);
+            var departamento = await _context.Departamentos.SingleOrDefaultAsync(i => i.DepartamentoId == id);
+            _context.Departamentos.Remove(departamento);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }

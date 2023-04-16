@@ -22,6 +22,23 @@ namespace Academico.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("Academico.Models.Departamento", b =>
+                {
+                    b.Property<long?>("DepartamentoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long?>("DepartamentoId"), 1L, 1);
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("DepartamentoId");
+
+                    b.ToTable("Departamentos");
+                });
+
             modelBuilder.Entity("Academico.Models.Instituicao", b =>
                 {
                     b.Property<long?>("Id")

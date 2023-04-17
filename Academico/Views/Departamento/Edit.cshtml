@@ -1,7 +1,7 @@
 ﻿@model Academico.Models.Departamento
 
 @{
-    ViewData["Title"] = "Editar departamento";
+    ViewData["Title"] = "Editar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -13,11 +13,6 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="DepartamentoId" class="control-label"></label>
-                <input asp-for="DepartamentoId" class="form-control" />
-                <span asp-validation-for="DepartamentoId" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="Nome" class="control-label"></label>
                 <input asp-for="Nome" class="form-control" />
